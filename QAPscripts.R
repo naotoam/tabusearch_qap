@@ -27,7 +27,26 @@ swap<-function(sol,i,j){
   return(sol)
 }
 
-
+Inverse<-function(sol, largo, posInicial){
+  aux<-array()
+  if(largo+posInicial>length(sol)){
+    return(sol)
+  }
+  arrParcial = array()
+  for(i in 0:(largo-1)){
+    arrParcial[largo-i] = sol[posInicial+i]
+  }
+  for (i in 1:posInicial-1) {
+    aux[i] = sol[i]
+  }
+  for (i in 0:largo) {
+    aux[i+posInicial] = arrParcial[i+1]
+  }
+  for (i in (posInicial+largo):length(sol)) {
+    aux[i] = sol[i]
+  }
+  return(aux)
+}
 
 #leer instancia, crear y evaluar una solucion inicial
 instancia<-readQAP("bur26a.dat")
@@ -228,8 +247,6 @@ for(i in 1:30){
 plot(fitness2, main = "Estrategia golosa", xlab = "Solutions")
 lines(fitness)
 print(paste("Mejor", fitness[length(fitness)]))
-
-
 
 
 #########################################

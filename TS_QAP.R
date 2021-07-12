@@ -32,9 +32,8 @@ BuscarVecinoTabu <- function(tabuShortArr, tabuLongArr, sv, fit, intensidad, pen
     if(i_ > 26){
       i_ = i_ -26
     }
-    print(j)
     #si no está prohibido, devuelve el mejor valor de la vecindad.
-    if(tabuShortArr[pos_real, i_] == 0 & tabuLongArr[pos_real, i_] >= t_largo){
+    if(tabuShortArr[pos_real, i_] == 0 & tabuLongArr[pos_real, i_] < t_largo){
       r = list(pos = pos_real, fit = sv[pos_real], tsm = as.matrix(tabuLongArr))
       return(r)
     }
@@ -63,11 +62,6 @@ restar = function(x){
     0
   }
 }
-
-Shift<-function(sol, shiftLenght){
-  
-}
-
 
 TS_QAP<-function(filename, tiempoLocal, tiempoEspacio, intensidad, mCorto, mLargo, penalizacion, nVecinos, grafico = 1){
   
@@ -103,7 +97,7 @@ TS_QAP<-function(filename, tiempoLocal, tiempoEspacio, intensidad, mCorto, mLarg
           if( ij_>26){
             ij_ = ij_ - 26
           }
-          vecino<-swap(sol,i, ij_)
+          vecino<-Inverse(sol,i, ij_)
           Cvecino<-evaluarQAP(vecino,instancia$f,instancia$d)
           sv[i] <- Cvecino
         }
@@ -139,27 +133,5 @@ TS_QAP<-function(filename, tiempoLocal, tiempoEspacio, intensidad, mCorto, mLarg
 TS_QAP('bur26a.dat', tiempoLocal = 3, tiempoEspacio = 10, intensidad = 10, mCorto = 5, mLargo = 10, penalizacion = 0.5, nVecinos =  25)
 
 
-sol = c(1,2,3,4,5,6,7,8)
-Shift<-function(sol, shiftLenght, initialPos){
-  aux<-sol
-  for (i in 1:length(sol)) {
-    if(i<initialPos)
-    {
-      print(i)
-      aux[i] = sol[i]
-    }
-    if(i>=initialPos | i<=shiftLenght+initialPos)
-    {
-      aux[i] = sol[length(sol)-i+2]
-    }
-    if(i>shiftLenght)
-    {
-      aux[i] = sol[i-shiftLenght+1]
-    }
-  }
 
-  return(aux)
-}
-a = Shift(sol, 4, 3)
-a[1]
 
