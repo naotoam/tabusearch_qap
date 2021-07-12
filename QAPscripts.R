@@ -29,24 +29,50 @@ swap<-function(sol,i,j){
 
 Inverse<-function(sol, largo, posInicial){
   aux<-array()
-  if(largo+posInicial>length(sol)){
+  limiteInicial = 0
+  limiteFinal = posInicial
+  arrParcial = array()
+  if(posInicial+largo == 9){
     return(sol)
   }
-  arrParcial = array()
-  for(i in 0:(largo-1)){
-    arrParcial[largo-i] = sol[posInicial+i]
+  for(i in 1:largo){
+    if(posInicial + i>length(sol))
+    {
+      ajustado = posInicial + i - length(sol)
+      limiteInicial = ajustado + 1
+      arrParcial[largo-i+1] = sol[ajustado]
+    }
+    else{
+      arrParcial[largo-i+1] = sol[posInicial+i]
+    }
   }
-  for (i in 1:posInicial-1) {
-    aux[i] = sol[i]
+  if(largo+posInicial>length(sol)){
+    parcialInterior = array()
+    for (i in limiteInicial:limiteFinal) {
+      parcialInterior[i-limiteInicial+1] = sol[i]
+    }
+    for (i in 1:largo) {
+      aux[i] = arrParcial[i]
+    }
+    for (i in (largo+1):length(sol)) {
+      aux[i] = parcialInterior[i-largo]
+    }
   }
-  for (i in 0:largo) {
-    aux[i+posInicial] = arrParcial[i+1]
+  else{
+    for (i in 1:posInicial) {
+      aux[i] = sol[i]
+    }
+    for (i in 1:largo) {
+      aux[i+posInicial] = arrParcial[i]
+    }
+    for (i in (posInicial+largo+1):length(sol)) {
+      aux[i] = sol[i]
+    }
   }
-  for (i in (posInicial+largo):length(sol)) {
-    aux[i] = sol[i]
-  }
+  
   return(aux)
 }
+
 insert<-function(sol,i,j){
   piv<-sol
   
@@ -271,13 +297,6 @@ print(paste("Mejor", fitness[length(fitness)]))
 
 #########################################
 #########################################
-
-
-
-
-
-
-
 
 
 

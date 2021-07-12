@@ -99,7 +99,9 @@ TS_QAP<-function(filename, tiempoLocal, tiempoEspacio, intensidad, mCorto, mLarg
           }
           vecino<-Inverse(sol,i, ij_)
           Cvecino<-evaluarQAP(vecino,instancia$f,instancia$d)
-          sv[i] <- Cvecino
+          if(!any(is.na(vecino))){
+            sv[i] <- Cvecino  
+          }
         }
         #encuentro la posición del swap realizado
         #guardo este movimiento en la memoria de corto plazo si es que no lo ha sido anteriormente
@@ -130,7 +132,7 @@ TS_QAP<-function(filename, tiempoLocal, tiempoEspacio, intensidad, mCorto, mLarg
   return(list(ts = tabu_short, sol = sol, fit = e, tsm = tabu_long))
 }
 
-TS_QAP('bur26a.dat', tiempoLocal = 3, tiempoEspacio = 10, intensidad = 10, mCorto = 5, mLargo = 10, penalizacion = 0.5, nVecinos =  25)
+TS_QAP('bur26a.dat', tiempoLocal = 3, tiempoEspacio = 12, intensidad = 10, mCorto = 5, mLargo = 10, penalizacion = 0.5, nVecinos =  15)
 
 
 
