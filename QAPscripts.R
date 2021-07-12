@@ -47,6 +47,26 @@ Inverse<-function(sol, largo, posInicial){
   }
   return(aux)
 }
+insert<-function(sol,i,j){
+  piv<-sol
+  
+  if (i < j){
+    for (k in i:j){
+      sol[k] <-sol[k+1]
+    }
+  } else{
+    inicio <- j + 1
+    for (k in inicio:i){
+      sol[k] <- piv [k-1]
+    }
+  }
+  sol[j] <- piv[i]
+  return(sol)
+}
+
+#testList <- list(1,2,3,4,5,6,7,8,9)
+#newList <- insert(testList, 9, 4)
+
 
 #leer instancia, crear y evaluar una solucion inicial
 instancia<-readQAP("bur26a.dat")
